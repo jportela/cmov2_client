@@ -28,12 +28,12 @@ public class PropertyMarketActivity extends Activity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.main);
         SharedPreferences prefs = this.getSharedPreferences(PREFS_NAME, MODE_PRIVATE);
+    	Editor prefsEditor = prefs.edit();
 
         if (!prefs.contains(USER_EMAIL)) {
-        	Editor prefsEditor = prefs.edit();
             prefsEditor.putString(USER_EMAIL, "joao.portela@gmail.com");
             prefsEditor.commit();
-        	C2DMessaging.register(this, "joao.portela@gmail.com");
+        	C2DMessaging.register(this, "cmov2.dcjp@gmail.com");
         }
         try {
 			JSONArray propertiesJSON = RailsRestClient.GetArray("properties/items");

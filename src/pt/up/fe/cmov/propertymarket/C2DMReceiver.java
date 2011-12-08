@@ -29,7 +29,7 @@ import com.google.android.c2dm.C2DMBaseReceiver;
 
 public class C2DMReceiver extends C2DMBaseReceiver {
   public C2DMReceiver() {
-    super("this.is.not@real.biz");
+    super("cmov2.dcjp@gmail.com");
   }
 
   @Override
@@ -69,6 +69,10 @@ public class C2DMReceiver extends C2DMBaseReceiver {
   
   @Override
   protected void onMessage(Context context, Intent intent) {
-    Log.w("C2DMReceiver", intent.getStringExtra("payload"));
+    //Log.w("C2DMReceiver", intent.getStringExtra("payload"));
+    
+    Log.w("Tester", "Message: " + intent.getStringExtra("message"));
+    Log.w("Tester", "id: " + intent.getStringExtra("id"));
+    Log.w("Tester", "name: " + intent.getStringExtra("name"));
   }
 }
