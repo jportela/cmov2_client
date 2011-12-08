@@ -14,9 +14,17 @@
 
 package pt.up.fe.cmov.propertymarket;
 
+import org.apache.http.conn.ConnectTimeoutException;
+import org.json.JSONException;
+import org.json.JSONObject;
+
+import pt.up.fe.cmov.propertymarket.rest.RailsRestClient;
 import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
+import android.content.SharedPreferences.Editor;
 import android.util.Log;
+
 import com.google.android.c2dm.C2DMBaseReceiver;
 
 public class C2DMReceiver extends C2DMBaseReceiver {
@@ -27,6 +35,26 @@ public class C2DMReceiver extends C2DMBaseReceiver {
   @Override
   public void onRegistered(Context context, String registrationId) {
     Log.w("C2DMReceiver-onRegistered", registrationId);
+
+    SharedPreferences prefs = context.getSharedPreferences(PropertyMarketActivity.PREFS_NAME, MODE_PRIVATE);
+    String userEmail = prefs.getString(PropertyMarketActivity.USER_EMAIL, "");
+    
+    Editor prefsEditor = prefs.edit();
+    prefsEditor.putString(PropertyMarketActivity.REGISTRATION_ID, registrationId);
+    prefsEditor.commit();
+
+    
+    JSONObject obj;
+	try {
+		obj = new JSONObject("{ 'email': '" + userEmail + "', 'registration_id': '" + registrationId + "'}");
+	    RailsRestClient.Post("users/update_registration", obj);
+	} catch (JSONException e) {
+		// TODO Auto-generated catch block
+		e.printStackTrace();
+	} catch (ConnectTimeoutException e) {
+		// TODO Auto-generated catch block
+		e.printStackTrace();
+	}
   }
   
   @Override
