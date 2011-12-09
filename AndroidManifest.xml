@@ -27,7 +27,7 @@
             </intent-filter>
         </activity>
         
-        <activity android:name="pt.up.fe.cmov.app.PropertyTabMenu" android:theme="@android:style/Theme.NoTitleBar"> </activity>
+        <activity android:name="pt.up.fe.cmov.app.PropertyTabMenuActivity" android:theme="@android:style/Theme.NoTitleBar"> </activity>
         <activity android:name="pt.up.fe.cmov.app.PropertyDetailsActivity" android:theme="@android:style/Theme.NoTitleBar"> </activity>
         <activity android:name="pt.up.fe.cmov.app.PropertyAditionalInfoActivity" android:theme="@android:style/Theme.NoTitleBar"> </activity>
          

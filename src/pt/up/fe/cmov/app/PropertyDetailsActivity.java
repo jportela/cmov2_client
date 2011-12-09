@@ -25,10 +25,10 @@ public class PropertyDetailsActivity extends ListActivity {
 			super.onCreate(savedInstanceState);
 			
 	        try {
-	        	  Bitmap bitmap = BitmapFactory.decodeStream((InputStream)new URL(RailsRestClient.SERVER_URL + PropertyTabMenu.propertyInfo.getPhoto()).getContent());
+	        	  Bitmap bitmap = BitmapFactory.decodeStream((InputStream)new URL(RailsRestClient.SERVER_URL + PropertyTabMenuActivity.propertyInfo.getPhoto()).getContent());
 	        	  items.add(new EntryItem(bitmap,false));
-	        	  items.add(new EntryItem(this.getString(R.string.property_name),PropertyTabMenu.propertyInfo.getName(),false));
-				  items.add(new EntryItem(this.getString(R.string.property_state),PropertyTabMenu.propertyInfo.getState(),false));		
+	        	  items.add(new EntryItem(this.getString(R.string.property_name),PropertyTabMenuActivity.propertyInfo.getName(),false));
+				  items.add(new EntryItem(this.getString(R.string.property_state),PropertyTabMenuActivity.propertyInfo.getState(),false));		
 	        	} catch (MalformedURLException e) {
 	        	  e.printStackTrace();
 	        	} catch (IOException e) {
