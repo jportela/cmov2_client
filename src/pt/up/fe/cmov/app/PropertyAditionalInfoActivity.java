@@ -16,6 +16,7 @@ public class PropertyAditionalInfoActivity extends ListActivity {
 	 @Override
 	 public void onCreate(Bundle savedInstanceState) {
 			super.onCreate(savedInstanceState);
+			items.add(new EntryItem(this.getString(R.string.property_price),Integer.toString(PropertyTabMenu.propertyInfo.getPrice()),false));
 			items.add(new EntryItem(this.getString(R.string.property_city),PropertyTabMenu.propertyInfo.getCity(),false));
 			items.add(new EntryItem(this.getString(R.string.property_address),PropertyTabMenu.propertyInfo.getAddress(),false));
 			items.add(new EntryItem(this.getString(R.string.property_type),PropertyTabMenu.propertyInfo.getType(),false));

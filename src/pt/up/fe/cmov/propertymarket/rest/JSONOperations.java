@@ -36,6 +36,7 @@ public class JSONOperations {
 				property.setState(state);
 				property.setCreatedAt(createdAt);
 				property.setDescription(description);
+				property.setPrice(price);
 			}
 			
 			

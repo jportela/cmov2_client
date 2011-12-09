@@ -6,15 +6,10 @@ import java.net.MalformedURLException;
 import java.net.URL;
 import java.util.ArrayList;
 
-import org.apache.http.conn.ConnectTimeoutException;
-import org.json.JSONObject;
-
-import pt.up.cmov.entities.Property;
 import pt.up.fe.cmov.listadapter.EntryAdapter;
 import pt.up.fe.cmov.listadapter.EntryItem;
 import pt.up.fe.cmov.listadapter.Item;
 import pt.up.fe.cmov.propertymarket.R;
-import pt.up.fe.cmov.propertymarket.rest.JSONOperations;
 import pt.up.fe.cmov.propertymarket.rest.RailsRestClient;
 import android.app.ListActivity;
 import android.graphics.Bitmap;
