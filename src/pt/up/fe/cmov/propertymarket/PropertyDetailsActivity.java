@@ -19,9 +19,6 @@ import android.app.ListActivity;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.os.Bundle;
-import android.widget.GridView;
-import android.widget.ImageView;
-import android.widget.LinearLayout;
 
 public class PropertyDetailsActivity extends ListActivity {
 	
@@ -30,37 +27,30 @@ public class PropertyDetailsActivity extends ListActivity {
 	 @Override
 	 public void onCreate(Bundle savedInstanceState) {
 			super.onCreate(savedInstanceState);
-			setContentView(R.layout.list_property_details);
-			Property propertyInfo = null;	        
+			Property propertyInfo = null;	 
+			
 			try {
 				JSONObject selectedProperty = RailsRestClient.Get("properties/"+ PropertyMarketActivity.selectedPropertyID +"/long");
-				propertyInfo = JSONOperations.JSONToProperty(selectedProperty);
-				items.add(new EntryItem(this.getString(R.string.property_name),propertyInfo.getName()));
-				items.add(new EntryItem(this.getString(R.string.property_city),propertyInfo.getCity()));
-				items.add(new EntryItem(this.getString(R.string.property_address),propertyInfo.getAddress()));
-				items.add(new EntryItem(this.getString(R.string.property_state),propertyInfo.getState()));
-				items.add(new EntryItem(this.getString(R.string.property_type),propertyInfo.getType()));
-				items.add(new EntryItem(this.getString(R.string.property_description),propertyInfo.getDescription()));				
+				propertyInfo = JSONOperations.JSONToProperty(selectedProperty);		
 			} catch (ConnectTimeoutException e) {
-				items.add(new EntryItem(this.getString(R.string.propert_failed_1),this.getString(R.string.property_failed_2)));
-			}
-			
-			ImageView imageView = new ImageView(this);
-            imageView.setLayoutParams(new GridView.LayoutParams(400, 400));
-            imageView.setPadding(20, 20, 20, 20);
-            
+				e.printStackTrace();
+			}	
 	        
 	        try {
 	        	  Bitmap bitmap = BitmapFactory.decodeStream((InputStream)new URL(RailsRestClient.SERVER_URL + propertyInfo.getPhoto()).getContent());
-	        	  imageView.setImageBitmap(bitmap); 
+	        	  items.add(new EntryItem(bitmap,false));
+	        	  items.add(new EntryItem(this.getString(R.string.property_name),propertyInfo.getName(),false));
+				  items.add(new EntryItem(this.getString(R.string.property_city),propertyInfo.getCity(),false));
+				  items.add(new EntryItem(this.getString(R.string.property_address),propertyInfo.getAddress(),false));
+				  items.add(new EntryItem(this.getString(R.string.property_state),propertyInfo.getState(),false));
+				  items.add(new EntryItem(this.getString(R.string.property_type),propertyInfo.getType(),false));
+				  items.add(new EntryItem(this.getString(R.string.property_description),propertyInfo.getDescription(),false));		
 	        	} catch (MalformedURLException e) {
 	        	  e.printStackTrace();
 	        	} catch (IOException e) {
 	        	  e.printStackTrace();
 	        }
-	        
-	        LinearLayout layout = (LinearLayout) findViewById(R.id.linearLayout1);
-	        layout.addView(imageView);
+	                
 		 	EntryAdapter adapter = new EntryAdapter(this, items);
 		 	setListAdapter(adapter);
 	 }

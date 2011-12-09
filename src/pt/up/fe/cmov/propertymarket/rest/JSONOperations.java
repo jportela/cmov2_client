@@ -28,14 +28,17 @@ public class JSONOperations {
 				String address = obj.getString(Property.ADDRESS);
 				String city = obj.getString(Property.CITY);
 				String state = obj.getString(Property.STATE);
+				String description = obj.getString(Property.DESCRIPTION);
 				Date createdAt = dbDateFormatter.parse(obj.getString(Property.CREATED_AT));
 				
 				property.setAddress(address);
 				property.setCity(city);
 				property.setState(state);
 				property.setCreatedAt(createdAt);
-				
+				property.setDescription(description);
 			}
+			
+			
 			
 			return property;
 		}

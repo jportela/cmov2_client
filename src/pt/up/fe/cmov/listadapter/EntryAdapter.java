@@ -9,6 +9,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 public class EntryAdapter extends ArrayAdapter<Item> {
@@ -32,7 +33,7 @@ public class EntryAdapter extends ArrayAdapter<Item> {
         if (i != null) {
             if(i.isSection()){
                 SectionItem si = (SectionItem)i;
-                v = vi.inflate(R.layout.listitemsection, null);
+                v = vi.inflate(R.layout.list_item_section, null);
  
                 v.setOnClickListener(null);
                 v.setOnLongClickListener(null);
@@ -43,14 +44,26 @@ public class EntryAdapter extends ArrayAdapter<Item> {
                 sectionView.setTextSize(18);
             }else{
                 EntryItem ei = (EntryItem)i;
-                v = vi.inflate(R.layout.itemlistlayout, null);
-                final TextView title = (TextView)v.findViewById(R.id.list_item_entry_title);
-                final TextView subtitle = (TextView)v.findViewById(R.id.list_item_entry_summary);
- 
-                if (title != null)
-                    title.setText(ei.title);
-                if(subtitle != null)
-                    subtitle.setText(ei.subtitle);
+                if(ei.noImage()){
+	                v = vi.inflate(R.layout.item_list_layout, null);
+	                if(!ei.getClickable()){
+		                v.setOnClickListener(null);
+		                v.setOnLongClickListener(null);
+		                v.setLongClickable(ei.getClickable());
+	                }
+	                final TextView title = (TextView)v.findViewById(R.id.list_item_entry_title);
+	                final TextView subtitle = (TextView)v.findViewById(R.id.list_item_entry_summary);
+	 
+	                if (title != null)
+	                    title.setText(ei.getTile());
+	                if(subtitle != null)
+	                    subtitle.setText(ei.getSubtitle());
+                }else{
+                	v = vi.inflate(R.layout.item_list_image, null);
+                	ImageView image = (ImageView) v.findViewById(R.id.imageView1);
+                    image.setPadding(20, 20, 20, 20);
+  	        	  	image.setImageBitmap(ei.getBitmap());
+                }
             }
         }
         return v;
