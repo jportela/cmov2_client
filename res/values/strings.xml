@@ -2,4 +2,12 @@
 <resources>
     <string name="app_title">Property Market</string>
     <string name="app_name">PropertyMarket</string>
+   	<string name="property_name">Name</string>
+   	<string name="property_address">Address</string>
+   	<string name="property_city">City</string>
+    <string name="property_state">State</string>
+    <string name="property_type">Type</string>
+   	<string name="property_description">Description</string>
+   	<string name="propert_failed_1">Not sure if not connected</string>
+   	<string name="property_failed_2">Your just could get the info from server</string>
 </resources>

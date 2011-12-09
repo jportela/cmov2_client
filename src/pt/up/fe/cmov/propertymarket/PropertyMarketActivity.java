@@ -7,6 +7,8 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import pt.up.cmov.entities.Property;
+import pt.up.fe.cmov.gridadapter.PropertyGridAdapter;
 import pt.up.fe.cmov.propertymarket.rest.JSONOperations;
 import pt.up.fe.cmov.propertymarket.rest.RailsRestClient;
 import android.app.Activity;
@@ -22,6 +24,7 @@ public class PropertyMarketActivity extends Activity {
     public static final String PREFS_NAME = "PropertyMarketPrefs";
     public static final String USER_EMAIL = "user_email";
     public static final String REGISTRATION_ID = "registration_id";
+    public static long selectedPropertyID; 
 
     @Override
     public void onCreate(Bundle savedInstanceState) {

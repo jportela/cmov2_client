@@ -8,7 +8,7 @@ import java.util.Date;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import pt.up.fe.cmov.propertymarket.Property;
+import pt.up.cmov.entities.Property;
 
 public class JSONOperations {
 	

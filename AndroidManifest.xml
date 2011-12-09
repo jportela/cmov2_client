@@ -19,12 +19,16 @@
 
     <application android:icon="@drawable/icon" android:label="@string/app_name">
         <activity android:name=".PropertyMarketActivity"
+                  android:theme="@android:style/Theme.Light.NoTitleBar"
                   android:label="@string/app_name">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+        
+        <activity android:name=".PropertyDetailsActivity" android:theme="@android:style/Theme.Light.NoTitleBar"> </activity>
+         
         
         <service android:name=".C2DMReceiver" />
 		<receiver android:name="com.google.android.c2dm.C2DMBroadcastReceiver"
