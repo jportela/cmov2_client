@@ -1,5 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
+	<string name="property_title">Property</string>
+	<string name="property_title_lowercase">properties</string>
+	<string name="details_title">Details</string>
+	<string name="details_title_lowercase">details</string>
     <string name="app_title">Property Market</string>
     <string name="app_name">PropertyMarket</string>
     <string name="menu_desc"> UrPropMarket </string>

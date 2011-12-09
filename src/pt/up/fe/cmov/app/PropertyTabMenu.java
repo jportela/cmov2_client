@@ -31,14 +31,14 @@ public class PropertyTabMenu extends TabActivity {
 	    
 	    intent = new Intent().setClass(this, PropertyDetailsActivity.class);
 
-	    spec = tabHost.newTabSpec("property").setIndicator("Property",
-	                      res.getDrawable(R.drawable.ic_tab_ic_tab_info_selected))
+	    spec = tabHost.newTabSpec(this.getString(R.string.property_title_lowercase))
+	    			  .setIndicator(this.getString(R.string.property_title),res.getDrawable(R.drawable.ic_tab_ic_tab_info_selected))
 	                  .setContent(intent);
 	    tabHost.addTab(spec);
 
 	    intent = new Intent().setClass(this, PropertyAditionalInfoActivity.class);
-	    spec = tabHost.newTabSpec("details").setIndicator("Details",
-	                      res.getDrawable(R.drawable.ic_tab_aditional_info_unselected))
+	    spec = tabHost.newTabSpec(this.getString(R.string.details_title_lowercase))
+	    			  .setIndicator(this.getString(R.string.details_title),res.getDrawable(R.drawable.ic_tab_aditional_info_unselected))
 	                  .setContent(intent);
 	    tabHost.addTab(spec);
 	    
@@ -47,7 +47,8 @@ public class PropertyTabMenu extends TabActivity {
 	
 	public boolean loadProperty(){
 		try {
-			JSONObject selectedProperty = RailsRestClient.Get("properties/"+ PropertyMarketActivity.selectedPropertyID +"/long");
+			JSONObject selectedProperty = RailsRestClient.Get(this.getString(R.string.proprety_controller)+ 
+					PropertyMarketActivity.selectedPropertyID + this.getString(R.string.long_field));
 			PropertyTabMenu.propertyInfo = JSONOperations.JSONToProperty(selectedProperty);
 			return true;
 		} catch (ConnectTimeoutException e) {

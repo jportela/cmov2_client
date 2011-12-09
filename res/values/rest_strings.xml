@@ -1,0 +1,5 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+       <string name="proprety_controller">properties/</string>
+       <string name="long_field">/long</string>
+</resources>
