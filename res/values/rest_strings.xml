@@ -2,4 +2,6 @@
 <resources>
        <string name="proprety_controller">properties/</string>
        <string name="long_field">/long</string>
+       <string name="name">name</string>
+       <string name="message">message</string>
 </resources>

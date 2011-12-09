@@ -20,6 +20,9 @@ import org.json.JSONObject;
 
 import pt.up.fe.cmov.app.PropertyMarketActivity;
 import pt.up.fe.cmov.propertymarket.rest.RailsRestClient;
+import android.app.Notification;
+import android.app.NotificationManager;
+import android.app.PendingIntent;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
@@ -29,6 +32,10 @@ import android.util.Log;
 import com.google.android.c2dm.C2DMBaseReceiver;
 
 public class C2DMReceiver extends C2DMBaseReceiver {
+
+  private NotificationManager mManager;
+  private static final int APP_ID = 0;	
+	
   public C2DMReceiver() {
     super("cmov2.dcjp@gmail.com");
   }
@@ -56,6 +63,8 @@ public class C2DMReceiver extends C2DMBaseReceiver {
 		// TODO Auto-generated catch block
 		e.printStackTrace();
 	}
+	
+	mManager = (NotificationManager) getSystemService(Context.NOTIFICATION_SERVICE);
   }
   
   @Override
@@ -70,10 +79,16 @@ public class C2DMReceiver extends C2DMBaseReceiver {
   
   @Override
   protected void onMessage(Context context, Intent intent) {
-    //Log.w("C2DMReceiver", intent.getStringExtra("payload"));
-    
+	  Notification notification = new Notification(R.drawable.icon,intent.getStringExtra(this.getString(R.string.name)), System.currentTimeMillis());
+	  notification.setLatestEventInfo(this,this.getString(R.string.app_name),intent.getStringExtra(this.getString(R.string.message)),
+	  PendingIntent.getActivity(this.getBaseContext(), 0, intent,PendingIntent.FLAG_CANCEL_CURRENT));
+	  mManager.notify(APP_ID, notification);
+	  
     Log.w("Tester", "Message: " + intent.getStringExtra("message"));
     Log.w("Tester", "id: " + intent.getStringExtra("id"));
     Log.w("Tester", "name: " + intent.getStringExtra("name"));
+    
+    
+    
   }
 }

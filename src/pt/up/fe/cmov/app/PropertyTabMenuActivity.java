@@ -16,7 +16,7 @@ import android.widget.TabHost;
 public class PropertyTabMenuActivity extends TabActivity {
 	
 	static Property propertyInfo = null;
-	
+		
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
 	    super.onCreate(savedInstanceState);
