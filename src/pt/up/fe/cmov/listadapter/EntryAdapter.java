@@ -61,7 +61,7 @@ public class EntryAdapter extends ArrayAdapter<Item> {
                 }else{
                 	v = vi.inflate(R.layout.item_list_image, null);
                 	ImageView image = (ImageView) v.findViewById(R.id.imageView1);
-                    image.setPadding(20, 20, 20, 20);
+                    image.setPadding(20, 10, 20, 10);
   	        	  	image.setImageBitmap(ei.getBitmap());
                 }
             }

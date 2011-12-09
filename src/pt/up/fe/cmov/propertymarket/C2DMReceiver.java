@@ -18,6 +18,7 @@ import org.apache.http.conn.ConnectTimeoutException;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import pt.up.fe.cmov.app.PropertyMarketActivity;
 import pt.up.fe.cmov.propertymarket.rest.RailsRestClient;
 import android.content.Context;
 import android.content.Intent;

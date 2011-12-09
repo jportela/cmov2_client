@@ -7,8 +7,8 @@ import java.net.URL;
 import java.util.ArrayList;
 
 import pt.up.cmov.entities.Property;
-import pt.up.fe.cmov.propertymarket.PropertyDetailsActivity;
-import pt.up.fe.cmov.propertymarket.PropertyMarketActivity;
+import pt.up.fe.cmov.app.PropertyMarketActivity;
+import pt.up.fe.cmov.app.PropertyTabMenu;
 import pt.up.fe.cmov.propertymarket.rest.RailsRestClient;
 import android.content.Context;
 import android.content.Intent;
@@ -69,7 +69,7 @@ public class PropertyGridAdapter extends BaseAdapter {
 	            @Override
 	            public void onClick(View view) {
 	              PropertyMarketActivity.selectedPropertyID = getItemId(position);
-	              Intent intent = new Intent(mContext,PropertyDetailsActivity.class);
+	              Intent intent = new Intent(mContext,PropertyTabMenu.class);
 	              mContext.startActivity(intent);
 	            }
 	          });
