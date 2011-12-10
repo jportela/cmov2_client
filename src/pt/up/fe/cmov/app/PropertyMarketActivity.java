@@ -15,6 +15,7 @@ import pt.up.fe.cmov.propertymarket.rest.RailsRestClient;
 import android.accounts.Account;
 import android.accounts.AccountManager;
 import android.app.Activity;
+import android.content.Context;
 import android.content.SharedPreferences;
 import android.content.SharedPreferences.Editor;
 import android.os.Bundle;
@@ -39,22 +40,27 @@ public class PropertyMarketActivity extends Activity {
     	Editor prefsEditor = prefs.edit();
 
         if (!prefs.contains(USER_EMAIL)) {
-        	String email = "joao.portela@gmail.com";	//for emulator only!
-        	
+        	String email = null;
         	AccountManager accMan = (AccountManager) getSystemService(ACCOUNT_SERVICE);
             Account[] accounts = accMan.getAccounts();
             for (Account account : accounts) {
               email = account.name;
               Log.w("EMAIL ACCOUNT", email);
+              prefsEditor.putString(USER_EMAIL, email);
+              prefsEditor.commit();
               break;	//uses the first email account defined
             }
             
-            prefsEditor.putString(USER_EMAIL, email);
-            prefsEditor.commit();
         	C2DMessaging.register(this, "cmov2.dcjp@gmail.com");
         }
         try {
+
+		    if (!prefs.contains(PropertyMarketActivity.USER_EMAIL)) {
+		    	Log.w("PM-GetItems", "Client doesn't have an email account. Using default!");
+		    }
+		    
         	String email = prefs.getString(USER_EMAIL, "joao.portela@gmail.com");
+        	
 			JSONArray propertiesJSON = RailsRestClient.GetArray("properties/items", "user_email="+email);
 			
 			ArrayList<Property> properties = new ArrayList<Property>();

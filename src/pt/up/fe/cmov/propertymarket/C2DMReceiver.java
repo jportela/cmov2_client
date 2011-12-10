@@ -50,7 +50,12 @@ public class C2DMReceiver extends C2DMBaseReceiver {
     Log.w("C2DMReceiver-onRegistered", registrationId);
 
     SharedPreferences prefs = context.getSharedPreferences(PropertyMarketActivity.PREFS_NAME, MODE_PRIVATE);
-    String userEmail = prefs.getString(PropertyMarketActivity.USER_EMAIL, "");
+        
+    if (!prefs.contains(PropertyMarketActivity.USER_EMAIL)) {
+    	Log.w("PM-Registration", "Client doesn't have an email account. Using default!");
+    }
+    
+    String userEmail = prefs.getString(PropertyMarketActivity.USER_EMAIL, "joao.portela@gmail.com");
     
     Editor prefsEditor = prefs.edit();
     prefsEditor.putString(PropertyMarketActivity.REGISTRATION_ID, registrationId);

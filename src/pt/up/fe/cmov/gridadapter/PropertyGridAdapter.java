@@ -17,8 +17,10 @@ import android.app.AlertDialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.util.Log;
 import android.view.Gravity;
 import android.view.View;
 import android.view.View.OnLongClickListener;
@@ -82,7 +84,6 @@ public class PropertyGridAdapter extends BaseAdapter {
 
 	            @Override
 	            public boolean onLongClick(View v) {
-	            	
 	            	new AlertDialog.Builder(mContext)
 					.setTitle(pt.up.fe.cmov.propertymarket.R.string.discard_property_title)
 					.setMessage(pt.up.fe.cmov.propertymarket.R.string.discard_property_desc)
@@ -92,9 +93,17 @@ public class PropertyGridAdapter extends BaseAdapter {
 							new DialogInterface.OnClickListener() {
 								public void onClick(DialogInterface dialog, int id) {
 									try {
-										JSONObject obj = new JSONObject("{'user_email': 'joao.portela@gmail.com' }");
+									    SharedPreferences prefs = mContext.getSharedPreferences(PropertyMarketActivity.PREFS_NAME, Context.MODE_PRIVATE);
+
+									    if (!prefs.contains(PropertyMarketActivity.USER_EMAIL)) {
+									    	Log.w("PM-Discard", "Client doesn't have an email account. Using default!");
+									    }
+									    
+									    String userEmail = prefs.getString(PropertyMarketActivity.USER_EMAIL, "joao.portela@gmail.com");
+									    
+										JSONObject obj = new JSONObject("{'user_email': '" + userEmail + "' }");
 										
-										RailsRestClient.Post("properties/" + id + "/discard", obj);
+										RailsRestClient.Post("properties/" + getItemId(position) + "/discard", obj);
 									}
 									catch(Exception e) {
 										e.printStackTrace();
