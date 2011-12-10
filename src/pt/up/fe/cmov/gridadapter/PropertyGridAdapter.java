@@ -6,6 +6,8 @@ import java.net.MalformedURLException;
 import java.net.URL;
 import java.util.ArrayList;
 
+import org.json.JSONObject;
+
 import pt.up.cmov.entities.Property;
 import pt.up.fe.cmov.app.PropertyMarketActivity;
 import pt.up.fe.cmov.app.PropertyTabMenuActivity;
@@ -89,7 +91,15 @@ public class PropertyGridAdapter extends BaseAdapter {
 					.setPositiveButton(pt.up.fe.cmov.propertymarket.R.string.confirmation,
 							new DialogInterface.OnClickListener() {
 								public void onClick(DialogInterface dialog, int id) {
-									//TODO Ligação ao Servidor....
+									try {
+										JSONObject obj = new JSONObject("{'user_email': 'joao.portela@gmail.com' }");
+										
+										RailsRestClient.Post("properties/" + id + "/discard", obj);
+									}
+									catch(Exception e) {
+										e.printStackTrace();
+									}
+									
 									((Activity) mContext).finish();
 									Intent intent = new Intent(mContext, PropertyMarketActivity.class);
 									mContext.startActivity(intent);
