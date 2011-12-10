@@ -18,4 +18,5 @@
    	<string name="denial">No</string>
    	<string name="discard_property_title">Do you want to discard this property?</string>
    	<string name="discard_property_desc"> If you discard this property you will never see it again. Do you wish to continue?</string>
+	<string name="notification_title">New property!</string>
 </resources>

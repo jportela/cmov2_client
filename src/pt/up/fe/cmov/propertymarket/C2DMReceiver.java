@@ -35,6 +35,11 @@ public class C2DMReceiver extends C2DMBaseReceiver {
 
   private NotificationManager mManager;
   private static final int APP_ID = 0;	
+
+  private final String C2DM_DATA_TYPE = "ptype";
+  private final String C2DM_DATA_NAME = "name";
+  private final String C2DM_DATA_MESSAGE = "message";
+  private final String C2DM_DATA_ID = "id";
 	
   public C2DMReceiver() {
     super("cmov2.dcjp@gmail.com");
@@ -64,7 +69,6 @@ public class C2DMReceiver extends C2DMBaseReceiver {
 		e.printStackTrace();
 	}
 	
-	mManager = (NotificationManager) getSystemService(Context.NOTIFICATION_SERVICE);
   }
   
   @Override
@@ -79,16 +83,26 @@ public class C2DMReceiver extends C2DMBaseReceiver {
   
   @Override
   protected void onMessage(Context context, Intent intent) {
-	  Notification notification = new Notification(R.drawable.icon,intent.getStringExtra(this.getString(R.string.name)), System.currentTimeMillis());
-	  notification.setLatestEventInfo(this,this.getString(R.string.app_name),intent.getStringExtra(this.getString(R.string.message)),
-	  PendingIntent.getActivity(this.getBaseContext(), 0, intent,PendingIntent.FLAG_CANCEL_CURRENT));
-	  mManager.notify(APP_ID, notification);
+	  mManager = (NotificationManager) getSystemService(Context.NOTIFICATION_SERVICE);
 	  
-    Log.w("Tester", "Message: " + intent.getStringExtra("message"));
-    Log.w("Tester", "id: " + intent.getStringExtra("id"));
-    Log.w("Tester", "name: " + intent.getStringExtra("name"));
-    
-    
+	  int icon = R.drawable.icon;
+	  String id = intent.getStringExtra(C2DM_DATA_ID);
+	  String type = intent.getStringExtra(C2DM_DATA_TYPE);
+	  String name = intent.getStringExtra(C2DM_DATA_NAME);
+	  String message = intent.getStringExtra(C2DM_DATA_MESSAGE);
+
+	  if (type.equals("apartment"))
+		  icon = R.drawable.apartment_icon;
+	  else if (type.equals("castle"))
+		  icon = R.drawable.castle_icon;
+	  else if (type.equals("home"))
+		  icon = R.drawable.home_icon;
+	  
+	  Notification notification = new Notification(icon,intent.getStringExtra(this.getString(R.string.notification_title)), System.currentTimeMillis());
+	  notification.setLatestEventInfo(this,name,message,
+			  PendingIntent.getActivity(this.getBaseContext(), 0, intent,PendingIntent.FLAG_CANCEL_CURRENT));
+	 
+	  mManager.notify(APP_ID, notification);
     
   }
 }
