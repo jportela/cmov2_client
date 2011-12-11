@@ -39,6 +39,7 @@ public class PropertyDetailsActivity extends ListActivity {
 	 @Override
 	 public void onCreate(Bundle savedInstanceState) {
 			super.onCreate(savedInstanceState);
+			setContentView(R.layout.details_property);
 		
 	        try {
 	        	  Bitmap bitmap = BitmapFactory.decodeStream((InputStream)new URL(RailsRestClient.SERVER_URL + PropertyTabMenuActivity.propertyInfo.getPhoto()).getContent());
