@@ -26,8 +26,6 @@ public class PropertyTabMenuActivity extends TabActivity {
 	    TabHost tabHost = getTabHost();  
 	    TabHost.TabSpec spec;  
 	    Intent intent; 
-
-	    loadProperty();
 	    
 	    intent = new Intent().setClass(this, PropertyDetailsActivity.class);
 
@@ -47,7 +45,7 @@ public class PropertyTabMenuActivity extends TabActivity {
 	
 	public boolean loadProperty(){
 		try {
-			JSONObject selectedProperty = RailsRestClient.Get(this.getString(R.string.proprety_controller)+ 
+			JSONObject selectedProperty = RailsRestClient.Get(this.getString(R.string.proprety_controller) + 
 		    PropertyMarketActivity.selectedPropertyID + this.getString(R.string.long_field));
 			PropertyTabMenuActivity.propertyInfo = JSONOperations.JSONToProperty(selectedProperty);
 			return true;

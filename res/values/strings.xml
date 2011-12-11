@@ -23,4 +23,5 @@
 	<string name="aditional_section">Additional Information</string>
 	<string name="sync_menu">Sync</string>
 	<string name="discard_menu">Discard</string>
+	<string name="notification_title">New property!</string>
 </resources>

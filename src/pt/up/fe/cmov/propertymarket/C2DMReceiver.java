@@ -35,6 +35,10 @@ public class C2DMReceiver extends C2DMBaseReceiver {
 
   private NotificationManager mManager;
   private static final int APP_ID = 0;	
+
+  private final String C2DM_DATA_TYPE = "ptype";
+  private final String C2DM_DATA_NAME = "name";
+  private final String C2DM_DATA_MESSAGE = "message";
 	
   public C2DMReceiver() {
     super("cmov2.dcjp@gmail.com");
@@ -45,7 +49,12 @@ public class C2DMReceiver extends C2DMBaseReceiver {
     Log.w("C2DMReceiver-onRegistered", registrationId);
 
     SharedPreferences prefs = context.getSharedPreferences(PropertyMarketActivity.PREFS_NAME, MODE_PRIVATE);
-    String userEmail = prefs.getString(PropertyMarketActivity.USER_EMAIL, "");
+        
+    if (!prefs.contains(PropertyMarketActivity.USER_EMAIL)) {
+    	Log.w("PM-Registration", "Client doesn't have an email account. Using default!");
+    }
+    
+    String userEmail = prefs.getString(PropertyMarketActivity.USER_EMAIL, "joao.portela@gmail.com");
     
     Editor prefsEditor = prefs.edit();
     prefsEditor.putString(PropertyMarketActivity.REGISTRATION_ID, registrationId);
@@ -79,13 +88,23 @@ public class C2DMReceiver extends C2DMBaseReceiver {
   @Override
   protected void onMessage(Context context, Intent intent) {
 	  mManager = (NotificationManager) getSystemService(Context.NOTIFICATION_SERVICE);
-	  Notification notification = new Notification(R.drawable.icon,intent.getStringExtra(this.getString(R.string.name)), System.currentTimeMillis());
-	  notification.setLatestEventInfo(this,this.getString(R.string.app_name),intent.getStringExtra(this.getString(R.string.message)),
-	  PendingIntent.getActivity(this.getBaseContext(), 0, intent,PendingIntent.FLAG_CANCEL_CURRENT));
-	  mManager.notify(APP_ID, notification);
 	  
-    Log.w("Tester", "Message: " + intent.getStringExtra("message"));
-    Log.w("Tester", "id: " + intent.getStringExtra("id"));
-    Log.w("Tester", "name: " + intent.getStringExtra("name"));
+	  int icon = R.drawable.icon;
+	  String type = intent.getStringExtra(C2DM_DATA_TYPE);
+	  String name = intent.getStringExtra(C2DM_DATA_NAME);
+	  String message = intent.getStringExtra(C2DM_DATA_MESSAGE);
+
+	  if (type.equals("apartment"))
+		  icon = R.drawable.apartment_icon;
+	  else if (type.equals("castle"))
+		  icon = R.drawable.castle_icon;
+	  else if (type.equals("home"))
+		  icon = R.drawable.home_icon;
+	  
+	  Notification notification = new Notification(icon,intent.getStringExtra(this.getString(R.string.notification_title)), System.currentTimeMillis());
+	  notification.setLatestEventInfo(this,name,message,
+			  PendingIntent.getActivity(this.getBaseContext(), 0, intent,PendingIntent.FLAG_CANCEL_CURRENT));
+	 
+	  mManager.notify(APP_ID, notification);
   }
 }

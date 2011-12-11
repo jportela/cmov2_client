@@ -8,8 +8,6 @@ public class RailsRestClient {
 	
 	public final static String SERVER_URL = "http://192.168.1.2:3000";
 
-
-
 	public static JSONObject Get(String controller) throws ConnectTimeoutException {
 		return HttpClient.SendHttpGet(SERVER_URL + "/" + controller + ".json");
 	}

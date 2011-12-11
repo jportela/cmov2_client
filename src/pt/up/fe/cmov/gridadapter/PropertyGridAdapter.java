@@ -5,7 +5,6 @@ import java.io.InputStream;
 import java.net.MalformedURLException;
 import java.net.URL;
 import java.util.ArrayList;
-
 import pt.up.cmov.entities.Property;
 import pt.up.fe.cmov.app.PropertyMarketActivity;
 import pt.up.fe.cmov.app.PropertyTabMenuActivity;
@@ -27,15 +26,19 @@ import android.widget.LinearLayout;
 
 public class PropertyGridAdapter extends BaseAdapter {
     private Context mContext;
-    private ArrayList<Property> properties;
+    private static ArrayList<Property> properties;
 
     public PropertyGridAdapter(Context c, ArrayList<Property> properties) {
         mContext = c;
-        this.properties = properties;
+        PropertyGridAdapter.properties = properties;
     }
-
+    
     public int getCount() {
         return properties.size();
+    }
+    
+    public static int getStaticCount(){
+    	return properties.size();
     }
 
     public Object getItem(int position) {
@@ -43,6 +46,10 @@ public class PropertyGridAdapter extends BaseAdapter {
     }
 
     public long getItemId(int position) {
+        return properties.get(position).getId();
+    }
+    
+    public static long getItemStaticId(int position) {
         return properties.get(position).getId();
     }
 
@@ -69,6 +76,7 @@ public class PropertyGridAdapter extends BaseAdapter {
 	            @Override
 	            public void onClick(View view) {
 	              PropertyMarketActivity.selectedPropertyID = getItemId(position);
+	              PropertyMarketActivity.selectedPropertyPosition = position;
 	              Intent intent = new Intent(mContext,PropertyTabMenuActivity.class);
 	              mContext.startActivity(intent);
 	            }
