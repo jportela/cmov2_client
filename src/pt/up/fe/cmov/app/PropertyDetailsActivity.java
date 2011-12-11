@@ -107,17 +107,18 @@ public class PropertyDetailsActivity extends ListActivity {
 	             PropertyDetailsActivity.this.startActivity(intent);	 
 	         }
 	     } catch (Exception e) {
-	     }
 	     return false;
-	    }   
+	    }
+		return true;   
 	 }
+	}
 	
 	public int getPositionToMoveFoward(){
-	 if(PropertyGridAdapter.getStaticCount() - 1 > PropertyMarketActivity.selectedPropertyPosition)
-   		 PropertyMarketActivity.selectedPropertyPosition += 1;
-   	 else
-   		 PropertyMarketActivity.selectedPropertyPosition = 0;
-	 return PropertyMarketActivity.selectedPropertyPosition;
+		if(PropertyGridAdapter.getStaticCount() - 1 > PropertyMarketActivity.selectedPropertyPosition)
+   		 	PropertyMarketActivity.selectedPropertyPosition += 1;
+   	 	else
+   	 		PropertyMarketActivity.selectedPropertyPosition = 0;
+		return PropertyMarketActivity.selectedPropertyPosition;
 	}
 	
 	public int getPositionToMoveBackward(){
@@ -125,6 +126,6 @@ public class PropertyDetailsActivity extends ListActivity {
     		 PropertyMarketActivity.selectedPropertyPosition -= 1;
     	 else
     		 PropertyMarketActivity.selectedPropertyPosition = PropertyGridAdapter.getStaticCount();
-		 return PropertyMarketActivity.selectedPropertyPosition;
-		}
+		return PropertyMarketActivity.selectedPropertyPosition;
+	}
 }

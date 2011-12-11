@@ -27,6 +27,8 @@ public class PropertyTabMenuActivity extends TabActivity {
 	    TabHost.TabSpec spec;  
 	    Intent intent; 
 	    
+	    loadProperty();
+	    
 	    intent = new Intent().setClass(this, PropertyDetailsActivity.class);
 
 	    spec = tabHost.newTabSpec(this.getString(R.string.property_title_lowercase))

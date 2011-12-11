@@ -32,7 +32,7 @@ public class PropertyGridAdapter extends BaseAdapter {
         mContext = c;
         PropertyGridAdapter.properties = properties;
     }
-    
+
     public int getCount() {
         return properties.size();
     }
@@ -76,7 +76,6 @@ public class PropertyGridAdapter extends BaseAdapter {
 	            @Override
 	            public void onClick(View view) {
 	              PropertyMarketActivity.selectedPropertyID = getItemId(position);
-	              PropertyMarketActivity.selectedPropertyPosition = position;
 	              Intent intent = new Intent(mContext,PropertyTabMenuActivity.class);
 	              mContext.startActivity(intent);
 	            }
