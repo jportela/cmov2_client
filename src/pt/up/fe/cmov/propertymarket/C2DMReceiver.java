@@ -64,7 +64,6 @@ public class C2DMReceiver extends C2DMBaseReceiver {
 		e.printStackTrace();
 	}
 	
-	mManager = (NotificationManager) getSystemService(Context.NOTIFICATION_SERVICE);
   }
   
   @Override
@@ -79,6 +78,7 @@ public class C2DMReceiver extends C2DMBaseReceiver {
   
   @Override
   protected void onMessage(Context context, Intent intent) {
+	  mManager = (NotificationManager) getSystemService(Context.NOTIFICATION_SERVICE);
 	  Notification notification = new Notification(R.drawable.icon,intent.getStringExtra(this.getString(R.string.name)), System.currentTimeMillis());
 	  notification.setLatestEventInfo(this,this.getString(R.string.app_name),intent.getStringExtra(this.getString(R.string.message)),
 	  PendingIntent.getActivity(this.getBaseContext(), 0, intent,PendingIntent.FLAG_CANCEL_CURRENT));
@@ -87,8 +87,5 @@ public class C2DMReceiver extends C2DMBaseReceiver {
     Log.w("Tester", "Message: " + intent.getStringExtra("message"));
     Log.w("Tester", "id: " + intent.getStringExtra("id"));
     Log.w("Tester", "name: " + intent.getStringExtra("name"));
-    
-    
-    
   }
 }

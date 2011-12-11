@@ -16,16 +16,19 @@ import android.app.Activity;
 import android.content.SharedPreferences;
 import android.content.SharedPreferences.Editor;
 import android.os.Bundle;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.widget.GridView;
 
 import com.google.android.c2dm.C2DMessaging;
 
 public class PropertyMarketActivity extends Activity {
-    /** Called when the activity is first created. */
-    public static final String PREFS_NAME = "PropertyMarketPrefs";
+
+	public static final String PREFS_NAME = "PropertyMarketPrefs";
     public static final String USER_EMAIL = "user_email";
     public static final String REGISTRATION_ID = "registration_id";
     public static long selectedPropertyID; 
+	private final int syncBtnId = Menu.FIRST;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -61,4 +64,21 @@ public class PropertyMarketActivity extends Activity {
 			e.printStackTrace();
 		}
     }
+    
+    @Override
+	  public boolean onCreateOptionsMenu(Menu menu) {
+	    MenuItem searchMItm = menu.add(Menu.NONE,syncBtnId ,syncBtnId,this.getString(R.string.sync_menu));
+	    searchMItm.setIcon(R.drawable.ic_menu_sync);
+	    return super.onCreateOptionsMenu(menu);
+	  }
+	
+	@Override
+	public boolean onOptionsItemSelected(MenuItem item) {
+	    switch (item.getItemId()) {
+	        case syncBtnId:
+	        	onCreate(new Bundle());
+	        break;
+	    }
+	    return true;
+	}
 }

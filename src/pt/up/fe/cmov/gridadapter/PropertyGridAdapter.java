@@ -9,11 +9,9 @@ import java.util.ArrayList;
 import pt.up.cmov.entities.Property;
 import pt.up.fe.cmov.app.PropertyMarketActivity;
 import pt.up.fe.cmov.app.PropertyTabMenuActivity;
+import pt.up.fe.cmov.display.Display;
 import pt.up.fe.cmov.propertymarket.rest.RailsRestClient;
-import android.app.Activity;
-import android.app.AlertDialog;
 import android.content.Context;
-import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
@@ -80,27 +78,7 @@ public class PropertyGridAdapter extends BaseAdapter {
 
 	            @Override
 	            public boolean onLongClick(View v) {
-	            	
-	            	new AlertDialog.Builder(mContext)
-					.setTitle(pt.up.fe.cmov.propertymarket.R.string.discard_property_title)
-					.setMessage(pt.up.fe.cmov.propertymarket.R.string.discard_property_desc)
-					.setCancelable(true)
-					.setIcon(android.R.drawable.ic_menu_delete)
-					.setPositiveButton(pt.up.fe.cmov.propertymarket.R.string.confirmation,
-							new DialogInterface.OnClickListener() {
-								public void onClick(DialogInterface dialog, int id) {
-									//TODO Ligação ao Servidor....
-									((Activity) mContext).finish();
-									Intent intent = new Intent(mContext, PropertyMarketActivity.class);
-									mContext.startActivity(intent);
-								}
-							})
-					.setNegativeButton(pt.up.fe.cmov.propertymarket.R.string.denial, new DialogInterface.OnClickListener() {
-							public void onClick(DialogInterface dialog, int id) {
-							dialog.cancel();
-							}
-					}).show();
-	            	
+	            	Display.dialogBuildDeleteDiscard(getItemId(position),mContext);
 	                return true;
 	            }
 	        });
