@@ -47,13 +47,13 @@ public class PropertyMarketActivity extends Activity {
         	String email = null;
         	AccountManager accMan = (AccountManager) getSystemService(ACCOUNT_SERVICE);
             Account[] accounts = accMan.getAccounts();
-            for (Account account : accounts) {
+           /* for (Account account : accounts) {
               email = account.name;
               Log.w("EMAIL ACCOUNT", email);
               prefsEditor.putString(USER_EMAIL, email);
               prefsEditor.commit();
               break;	//uses the first email account defined
-            }
+            }*/
             
         	C2DMessaging.register(this, "cmov2.dcjp@gmail.com");
         }
