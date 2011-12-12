@@ -4,6 +4,7 @@ import org.apache.http.conn.ConnectTimeoutException;
 import org.json.JSONObject;
 
 import pt.up.cmov.entities.Property;
+import pt.up.fe.cmov.display.Display;
 import pt.up.fe.cmov.gridadapter.PropertyGridAdapter;
 import pt.up.fe.cmov.propertymarket.R;
 import pt.up.fe.cmov.propertymarket.rest.JSONOperations;
@@ -12,7 +13,6 @@ import android.app.TabActivity;
 import android.content.Intent;
 import android.content.res.Resources;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.GestureDetector;
 import android.view.MotionEvent;
 import android.view.View;
@@ -122,7 +122,7 @@ public class PropertyTabMenuActivity extends TabActivity {
 			PropertyTabMenuActivity.propertyInfo = JSONOperations.JSONToProperty(selectedProperty);
 			return true;
 		} catch (ConnectTimeoutException e) {
-			e.printStackTrace();
+			Display.dialogMessageNotConnected(this);
 		}	
 		return false;
 	}

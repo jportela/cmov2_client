@@ -24,4 +24,10 @@
 	<string name="sync_menu">Sync</string>
 	<string name="discard_menu">Discard</string>
 	<string name="notification_title">New property!</string>
+	<string name="discon_title"> Unable to Connect </string>
+   	<string name="discon_desc">The application is unable to establish a connection with the server. Maybe your internet connection is turned off.</string>
+	<string name="cont">Continue</string>
+	<string name="loading">Loading</string>
+	<string name="please_wait">Wait for a few seconds</string>
 </resources>
+
