@@ -73,19 +73,16 @@ public class PropertyTabMenuActivity extends TabActivity {
 		         if (Math.abs(e1.getY() - e2.getY()) > SWIPE_MAX_OFF_PATH){
 		            return false;
 		         }
-		         
-		         if(Math.abs(velocityX) > SWIPE_THRESHOLD_VELOCITY){
-			         if(e1.getX() - e2.getX() > SWIPE_MIN_DISTANCE) {
-			        	 PropertyMarketActivity.selectedPropertyID = PropertyGridAdapter.getItemStaticId(getPositionToMoveFoward());
-			             Intent intent = new Intent(PropertyTabMenuActivity.this,PropertyTabMenuActivity.class);
-			             PropertyTabMenuActivity.this.startActivity(intent);
-			             PropertyTabMenuActivity.this.finish();	         
-			         }else if (e2.getX() - e1.getX() > SWIPE_MIN_DISTANCE) {
-			        	 PropertyMarketActivity.selectedPropertyID = PropertyGridAdapter.getItemStaticId(getPositionToMoveBackward());
-			             Intent intent = new Intent(PropertyTabMenuActivity.this,PropertyTabMenuActivity.class);
-			             PropertyTabMenuActivity.this.startActivity(intent);
-			             PropertyTabMenuActivity.this.finish();	         
-			         }
+		         if(e1.getX() - e2.getX() > SWIPE_MIN_DISTANCE && Math.abs(velocityX*velocityY) > SWIPE_THRESHOLD_VELOCITY) {
+		        	 PropertyMarketActivity.selectedPropertyID = PropertyGridAdapter.getItemStaticId(getPositionToMoveFoward());
+		             Intent intent = new Intent(PropertyTabMenuActivity.this,PropertyTabMenuActivity.class);
+		             PropertyTabMenuActivity.this.startActivity(intent);
+		             PropertyTabMenuActivity.this.finish();	         
+		         }else if (e2.getX() - e1.getX() > SWIPE_MIN_DISTANCE && Math.abs(velocityX*velocityY) > SWIPE_THRESHOLD_VELOCITY) {
+		        	 PropertyMarketActivity.selectedPropertyID = PropertyGridAdapter.getItemStaticId(getPositionToMoveBackward());
+		             Intent intent = new Intent(PropertyTabMenuActivity.this,PropertyTabMenuActivity.class);
+		             PropertyTabMenuActivity.this.startActivity(intent);
+		             PropertyTabMenuActivity.this.finish();	         
 		         }
 		     } catch (Exception e) {
 		     return false;
