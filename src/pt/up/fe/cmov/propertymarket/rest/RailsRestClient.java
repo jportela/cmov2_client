@@ -6,7 +6,7 @@ import org.json.JSONObject;
 
 public class RailsRestClient {
 	
-	public final static String SERVER_URL = "http://10.0.0.144:3000";
+	public final static String SERVER_URL = "http://172.30.37.205:3000";
 
 	public static JSONObject Get(String controller) throws ConnectTimeoutException {
 		return HttpClient.SendHttpGet(SERVER_URL + "/" + controller + ".json");

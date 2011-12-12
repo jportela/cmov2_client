@@ -19,6 +19,7 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import pt.up.fe.cmov.app.PropertyMarketActivity;
+import pt.up.fe.cmov.app.PropertyTabMenuActivity;
 import pt.up.fe.cmov.propertymarket.rest.RailsRestClient;
 import android.app.Notification;
 import android.app.NotificationManager;
@@ -38,7 +39,10 @@ public class C2DMReceiver extends C2DMBaseReceiver {
 
   private final String C2DM_DATA_TYPE = "ptype";
   private final String C2DM_DATA_NAME = "name";
-  private final String C2DM_DATA_MESSAGE = "message";
+  private final String C2DM_DATA_ID = "id";
+  private final String C2DM_DATA_PRICE = "price";
+  private final String C2DM_DATA_CITY = "city";
+  private final String C2DM_DATA_NUM = "num";
 	
   public C2DMReceiver() {
     super("cmov2.dcjp@gmail.com");
@@ -92,8 +96,14 @@ public class C2DMReceiver extends C2DMBaseReceiver {
 	  int icon = R.drawable.icon;
 	  String type = intent.getStringExtra(C2DM_DATA_TYPE);
 	  String name = intent.getStringExtra(C2DM_DATA_NAME);
-	  String message = intent.getStringExtra(C2DM_DATA_MESSAGE);
+	  String city = intent.getStringExtra(C2DM_DATA_CITY);
+	  int id = Integer.parseInt(intent.getStringExtra(C2DM_DATA_ID));
+	  int price = Integer.parseInt(intent.getStringExtra(C2DM_DATA_PRICE));
+	  String status = intent.getStringExtra(C2DM_DATA_NUM) + " props!";
 
+	  String title = city + " - " + price + "€";
+	  String message = name + " is now available in Property Market!";
+	  
 	  if (type.equals("apartment"))
 		  icon = R.drawable.apartment_icon;
 	  else if (type.equals("castle"))
@@ -101,10 +111,16 @@ public class C2DMReceiver extends C2DMBaseReceiver {
 	  else if (type.equals("home"))
 		  icon = R.drawable.home_icon;
 	  
-	  Notification notification = new Notification(icon,intent.getStringExtra(this.getString(R.string.notification_title)), System.currentTimeMillis());
-	  notification.setLatestEventInfo(this,name,message,
-			  PendingIntent.getActivity(this.getBaseContext(), 0, intent,PendingIntent.FLAG_CANCEL_CURRENT));
-	 
+	  PropertyMarketActivity.selectedPropertyID = id;
+	  
+	  Intent viewIntent = new Intent(this, PropertyTabMenuActivity.class);
+	  
+	  viewIntent.putExtra("yourpackage.notifyId", id);
+	  PendingIntent contentIntent = PendingIntent.getActivity(this, 1, viewIntent, 0);
+
+	  Notification notification = new Notification(icon,status, System.currentTimeMillis());
+	  notification.setLatestEventInfo(this,title,message,contentIntent);
+	   
 	  mManager.notify(APP_ID, notification);
   }
 }
