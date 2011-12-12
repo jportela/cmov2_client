@@ -17,6 +17,7 @@ import android.accounts.Account;
 import android.accounts.AccountManager;
 import android.app.Activity;
 import android.app.ProgressDialog;
+import android.content.Context;
 import android.content.SharedPreferences;
 import android.content.SharedPreferences.Editor;
 import android.os.Bundle;
@@ -29,7 +30,7 @@ import android.widget.GridView;
 
 import com.google.android.c2dm.C2DMessaging;
 
-public class PropertyMarketActivity extends Activity implements Runnable {
+public class PropertyMarketActivity extends Activity{
 
 	public static final String PREFS_NAME = "PropertyMarketPrefs";
     public static final String USER_EMAIL = "user_email";
@@ -37,16 +38,19 @@ public class PropertyMarketActivity extends Activity implements Runnable {
     public static long selectedPropertyID;
     public static int selectedPropertyPosition; 
 	private final int syncBtnId = Menu.FIRST;
-	boolean connection = true;
-	Thread thread;
-	SharedPreferences prefs;
-	ProgressDialog dialog;
+	static SharedPreferences prefs;
+	static ProgressDialog dialog;
+	private static Handler handler;
+	private Thread informationThread;
+	static ArrayList<Property> properties;
+
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.main);
-		
+        properties = new ArrayList<Property>();
+        handler = new Handler();
         prefs = this.getSharedPreferences(PREFS_NAME, MODE_PRIVATE);
     	Editor prefsEditor = prefs.edit();
 
@@ -65,12 +69,13 @@ public class PropertyMarketActivity extends Activity implements Runnable {
         	C2DMessaging.register(this, "cmov2.dcjp@gmail.com");
         }
         
-        dialog = ProgressDialog.show(this, this.getString(R.string.loading), this.getString(R.string.please_wait),true,false);
-        thread = new Thread(this);
-        thread.start();
+        informationThread = new LoadInfoThread();
+        LoadInfoThread.context = this;
+        informationThread.start();
+        dialog = ProgressDialog.show(this, this.getString(R.string.loading), this.getString(R.string.please_wait));
     }
     
-    @Override
+	@Override
 	  public boolean onCreateOptionsMenu(Menu menu) {
 	    MenuItem searchMItm = menu.add(Menu.NONE,syncBtnId ,syncBtnId,this.getString(R.string.sync_menu));
 	    searchMItm.setIcon(R.drawable.ic_menu_sync);
@@ -87,48 +92,59 @@ public class PropertyMarketActivity extends Activity implements Runnable {
 	    return true;
 	}
 
-	@Override
-	public void run() {
-		ArrayList<Property> properties = new ArrayList<Property>();
-		try {
+	
+	private static class LoadInfoThread extends Thread{
+		
+		public static Context context;
+			
+		@Override
+		public void run() {
+			MyRunnable.context = context;
+			try {
 
-		    if (!prefs.contains(PropertyMarketActivity.USER_EMAIL)) {
-		    	Log.w("PM-GetItems", "Client doesn't have an email account. Using default!");
-		    }
-		    
-        	String email = prefs.getString(USER_EMAIL, "joao.portela@gmail.com");
-        	
-			JSONArray propertiesJSON = RailsRestClient.GetArray("properties/items", "user_email="+email);
-						
-			for (int i=0; i < propertiesJSON.length(); i++) {
-				JSONObject obj = propertiesJSON.getJSONObject(i);
-				Property property = JSONOperations.JSONToProperty(obj);
-				properties.add(property);
+			    if (!prefs.contains(PropertyMarketActivity.USER_EMAIL)) {
+			    	Log.w("PM-GetItems", "Client doesn't have an email account. Using default!");
+			    }
+			    
+	        	String email = prefs.getString(USER_EMAIL, "joao.portela@gmail.com");
+	        	
+				JSONArray propertiesJSON = RailsRestClient.GetArray("properties/items", "user_email="+email);
+							
+				for (int i=0; i < propertiesJSON.length(); i++) {
+					JSONObject obj = propertiesJSON.getJSONObject(i);
+					Property property = JSONOperations.JSONToProperty(obj);
+					properties.add(property);
+				}
+								
+			    handler.post(new MyRunnable());
+				
+			} catch (ConnectTimeoutException e) {
+				MyRunnable.connection = false;
+			    handler.post(new MyRunnable());
+			} catch (JSONException e) {
+				e.printStackTrace();
 			}
-			
-			GridView gridview = (GridView) findViewById(R.id.propertiesGrid);
-		    gridview.setAdapter(new PropertyGridAdapter(this, properties));
-		    handler.sendEmptyMessage(0);
-			
-		} catch (ConnectTimeoutException e) {
-			//if(thread != null){
-				connection = false;
-				handler.sendEmptyMessage(1);
-			//}
-			e.printStackTrace();
-		} catch (JSONException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
 		}
 	}
 	
-	private Handler handler = new Handler() {
-        @Override
-        public void handleMessage(Message msg) {
-        	dialog.dismiss();
-        	thread.interrupt();
-			if(!connection)
-				Display.dialogMessageNotConnected(PropertyMarketActivity.this);
-        }
-	};
+	static public class MyRunnable implements Runnable {
+		static Context context;
+		static boolean connection = true;
+
+		public void setContext(Context context){
+			MyRunnable.context = context;
+		}
+		
+		public void run() {
+			if(connection == false){
+				dialog.dismiss();
+				Display.dialogMessageNotConnected(context);
+			}
+			else{
+			    dialog.dismiss();
+				GridView gridview = (GridView) ((Activity) context).findViewById(R.id.propertiesGrid);
+			    gridview.setAdapter(new PropertyGridAdapter(context, properties));
+			}
+		}
+	}
 }
