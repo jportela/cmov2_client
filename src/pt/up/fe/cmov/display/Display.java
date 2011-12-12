@@ -50,5 +50,19 @@ public class Display {
 				}
 		}).show();
 	}
+	
+	public static void dialogMessageNotConnected(final Context context){
+		new AlertDialog.Builder(context)
+		.setTitle(pt.up.fe.cmov.propertymarket.R.string.discon_title)
+		.setMessage(pt.up.fe.cmov.propertymarket.R.string.discon_desc)
+		.setCancelable(true)
+		.setIcon(android.R.drawable.ic_dialog_alert)
+		.setPositiveButton(pt.up.fe.cmov.propertymarket.R.string.cont,
+				new DialogInterface.OnClickListener() {
+					public void onClick(DialogInterface dialog, int id) {
+						((Activity) context).finish();					
+					}
+				}).show();
+	} 
 
 }
