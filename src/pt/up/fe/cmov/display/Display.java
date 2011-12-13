@@ -14,7 +14,7 @@ import android.util.Log;
 
 public class Display {
 	
-	public static void dialogBuildDeleteDiscard(long id,final Context mContext){
+	public static void dialogBuildDeleteDiscard(final long itemId,final Context mContext){
 		new AlertDialog.Builder(mContext)
 		.setTitle(pt.up.fe.cmov.propertymarket.R.string.discard_property_title)
 		.setMessage(pt.up.fe.cmov.propertymarket.R.string.discard_property_desc)
@@ -34,7 +34,7 @@ public class Display {
 
 							JSONObject obj = new JSONObject("{'user_email': '" + userEmail + "' }");
 
-							RailsRestClient.Post("properties/" + id + "/discard", obj);
+							RailsRestClient.Post("properties/" + itemId + "/discard", obj);
 							}
 							catch(Exception e) {
 							e.printStackTrace();
